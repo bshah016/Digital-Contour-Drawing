@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+<style>
+      body {
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+      }
+      #myCanvas {
+
+        
+        border: 1px solid darkcyan;
+        display: inline-block;
+      }   
+      #thing {
+        font-size: 18px;
+        color: darkcyan;
+        display: inline-block;
+      }
+      
+    </style>
+  <head>
+    <title>Digital Countour Drawing</title>
+  </head>
+  <body>
+    
+    <canvas id="myCanvas" width="700" height="700"></canvas>
+    <script>
+    alert("To get started, try moving your mouse around in the box!");
+    alert("Also try holding and dragging to make beautiful shapes!");
+    alert("To find the exact coordinates of your mouse, just click and read the coordinates");
+    alert("And Last but not least, the canvas clears with every click, so make sure to only use one stroke!");
+    var down = 0;
+    var startx = 100;
+    var starty = 100;
+    var downx = 0;
+    var downy = 0;
+    var upx = 0;
+    var upy = 0;
+    var currentx = 0;
+    var currenty = 0;
+    var textwidth = 600;
+    var textheight = 100;
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+
+    function writeMessages(canvas) {
+      var context = canvas.getContext('2d');
+      context.clearRect(0, 0, textwidth, textheight);
+      context.font = '18pt monospace';
+      context.fillStyle = 'darkcyan';
+      context.fillText('Mouse position: ' + currentx + ',' + currenty, 10, 25);
+      context.fillText('Mouse down: ' + downx + ',' + downy, 10, 55);
+      context.fillText('Mouse up: ' + upx + ',' + upy, 10, 85);
+    }
+
+    function getMousePos(canvas, evt) {
+      var rect = canvas.getBoundingClientRect();
+      return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+      };
+    }
+
+    function drawRectangle(canvas, x, y)
+    {
+      canvas = document.getElementById('myCanvas');
+      context = canvas.getContext('2d');
+      context.beginPath();
+      context.rect(startx, starty, x - startx, y - starty);
+      context.strokeStyle="#6495ED";
+      context.stroke();
+      context.putImageData(canvas, 0, 0);
+    }
+
+    function drawPoint(canvas, x, y)
+    {
+      canvas = document.getElementById('myCanvas');
+      context = canvas.getContext('2d');
+      context.beginPath();
+      context.rect(x, y, 1, 1);
+      context.strokeStyle = "#6495ED";
+      context.stroke();
+      context.putImageData(canvas, 0, 0);
+    }
+
+    canvas.addEventListener('mousemove', function(evt) {
+      var mousePos = getMousePos(canvas, evt);
+      currentx = mousePos.x;
+      currenty = mousePos.y;
+      writeMessages(canvas);
+      if (down == 1)
+      {
+        writeMessages(canvas);
+        drawRectangle(canvas, currentx, currenty);
+      }
+      drawPoint(canvas, currentx, currenty);
+    }, false);
+
+    canvas.addEventListener('mousedown', function(evt) {
+      var mousePos = getMousePos(canvas, evt);
+      downx = mousePos.x;
+      downy = mousePos.y;
+      startx = downx;
+      starty = downy;
+      down = 1;
+      writeMessages(canvas);
+    }, false);
+    canvas.addEventListener('mouseup', function(evt) {
+      var mousePos = getMousePos(canvas, evt);
+      upx = mousePos.x;
+      upy = mousePos.y;
+      writeMessages(canvas);
+      down = 0;
+      context.clearRect(0, textheight, canvas.width, canvas.height);  
+    }, false);
+
+/*
+onclick	script 	Fires on a mouse click on the element
+ondblclick	script 	Fires on a mouse double-click on the element
+ondragNew	script 	Script to be run when an element is dragged
+ondragendNew	script 	Script to be run at the end of a drag operation
+ondragenterNew	script 	Script to be run when an element has been dragged to a valid drop target
+ondragleaveNew	script 	Script to be run when an element leaves a valid drop target
+ondragoverNew	script 	Script to be run when an element is being dragged over a valid drop target
+ondragstartNew	script 	Script to be run at the start of a drag operation
+ondropNew	script 	Script to be run when dragged element is being dropped
+onmousedown	script 	Fires when a mouse button is pressed down on an element
+onmousemove	script 	Fires when the mouse pointer moves over an element
+onmouseout	script	Fires when the mouse pointer moves out of an element
+onmouseover	script	Fires when the mouse pointer moves over an element
+onmouseup	script 	Fires when a mouse button is released over an element
+onmousewheelNew	script 	Script to be run when the mouse wheel is being rotated
+onscrollNew	script 	Script to be run when an element's scrollbar is being scrolled
+*/
+    </script>
+    
+      
+    <p>
+
+    </p>
+    <p id = "thing">
+      This is meant for entertainment purposes only. My professor helped me with parts of this code. 
+    </p>
+
+  </body>
+</html>
